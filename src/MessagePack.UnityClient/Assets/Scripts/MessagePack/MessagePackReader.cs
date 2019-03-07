@@ -233,7 +233,9 @@ namespace MessagePack
         /// Reads nil if it is the next token.
         /// </summary>
         /// <returns><c>true</c> if the next token was nil; <c>false</c> otherwise.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool TryReadNil()
         {
             if (this.NextCode == MessagePackCode.Nil)
@@ -277,7 +279,9 @@ namespace MessagePack
         /// <see cref="MessagePackCode.Array32"/>, or
         /// some built-in code between <see cref="MessagePackCode.MinFixArray"/> and <see cref="MessagePackCode.MaxFixArray"/>.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public int ReadArrayHeader()
         {
             ThrowInsufficientBufferUnless(this.reader.TryRead(out byte code));
@@ -664,7 +668,9 @@ namespace MessagePack
         /// or a code between <see cref="MessagePackCode.MinFixStr"/> and <see cref="MessagePackCode.MaxFixStr"/>.
         /// </summary>
         /// <returns>A string, or <c>null</c> if the current msgpack token is <see cref="MessagePackCode.Nil"/>.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public string ReadString()
         {
             if (this.TryReadNil())
@@ -830,7 +836,9 @@ namespace MessagePack
         /// Gets the length of the next string.
         /// </summary>
         /// <returns>The length of the next string.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         private int GetStringLengthInBytes()
         {
             ThrowInsufficientBufferUnless(this.reader.TryRead(out byte code));

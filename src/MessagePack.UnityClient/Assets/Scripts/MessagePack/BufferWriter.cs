@@ -51,7 +51,9 @@ namespace MessagePack
         /// Initializes a new instance of the <see cref="BufferWriter"/> struct.
         /// </summary>
         /// <param name="output">The <see cref="IBufferWriter{T}"/> to be wrapped.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public BufferWriter(IBufferWriter<byte> output)
         {
             _buffered = 0;
@@ -71,7 +73,9 @@ namespace MessagePack
         /// </summary>
         /// <param name="sequencePool">The pool from which to draw an <see cref="IBufferWriter{T}"/> if required..</param>
         /// <param name="array">An array to start with so we can avoid accessing the <paramref name="sequencePool"/> if possible.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal BufferWriter(SequencePool sequencePool, byte[] array)
         {
             _buffered = 0;
@@ -107,7 +111,9 @@ namespace MessagePack
             return this.Span;
         }
 
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public ref byte GetPointer(int sizeHint)
         {
             Ensure(sizeHint);
@@ -126,7 +132,9 @@ namespace MessagePack
         /// Calls <see cref="IBufferWriter{T}.Advance(int)"/> on the underlying writer
         /// with the number of uncommitted bytes.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Commit()
         {
             var buffered = _buffered;
@@ -145,7 +153,9 @@ namespace MessagePack
         /// Used to indicate that part of the buffer has been written to.
         /// </summary>
         /// <param name="count">The number of bytes written to.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Advance(int count)
         {
             _buffered += count;
@@ -156,7 +166,9 @@ namespace MessagePack
         /// Copies the caller's buffer into this writer and calls <see cref="Advance(int)"/> with the length of the source buffer.
         /// </summary>
         /// <param name="source">The buffer to copy in.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Write(ReadOnlySpan<byte> source)
         {
             if (_span.Length >= source.Length)
@@ -174,7 +186,9 @@ namespace MessagePack
         /// Acquires a new buffer if necessary to ensure that some given number of bytes can be written to a single buffer.
         /// </summary>
         /// <param name="count">The number of bytes that must be allocated in a single buffer.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Ensure(int count = 1)
         {
             if (_span.Length < count)

@@ -25,7 +25,9 @@ namespace MessagePack
 
     public static class FormatterResolverExtensions
     {
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static IMessagePackFormatter<T> GetFormatterWithVerify<T>(this IFormatterResolver resolver)
         {
             IMessagePackFormatter<T> formatter;

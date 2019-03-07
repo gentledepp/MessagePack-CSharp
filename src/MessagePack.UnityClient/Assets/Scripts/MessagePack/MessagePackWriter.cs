@@ -123,7 +123,9 @@ namespace MessagePack
         /// <see cref="MessagePackCode.Array32"/>.
         /// </summary>
         /// <param name="count">The number of elements that will be written in the array.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void WriteArrayHeader(uint count)
         {
             if (count <= MessagePackRange.MaxFixArrayCount)
@@ -343,7 +345,9 @@ namespace MessagePack
         /// <see cref="MessagePackCode.UInt32"/>.
         /// </summary>
         /// <param name="value">The value to write.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Write(uint value)
         {
             if (value <= MessagePackRange.MaxFixPositiveInt)
@@ -395,7 +399,9 @@ namespace MessagePack
         /// <see cref="MessagePackCode.Int32"/>.
         /// </summary>
         /// <param name="value">The value to write.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Write(int value)
         {
             if (value >= 0)
@@ -932,7 +938,9 @@ namespace MessagePack
         /// or <see cref="MessagePackCode.Nil"/> if the <paramref name="value"/> is <c>null</c>.
         /// </summary>
         /// <param name="value">The value to write. May be null.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public unsafe void Write(string value)
         {
             if (value == null)
@@ -1202,7 +1210,9 @@ namespace MessagePack
         /// <returns>
         /// A reference to the first byte in the buffer.
         /// </returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         private ref byte WriteString_PrepareSpan(int characterLength, out int bufferSize, out int encodedBytesOffset)
         {
             // MaxByteCount -> WritePrefix -> GetBytes has some overheads of `MaxByteCount`
@@ -1240,7 +1250,9 @@ namespace MessagePack
         /// <param name="pBuffer">A pointer obtained from a prior call to <see cref="WriteString_PrepareSpan"/>.</param>
         /// <param name="estimatedOffset">The offset obtained from a prior call to <see cref="WriteString_PrepareSpan"/>.</param>
         /// <param name="byteCount">The number of bytes used to actually encode the string.</param>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         private unsafe void WriteString_PostEncoding(byte* pBuffer, int estimatedOffset, int byteCount)
         {
             int bufferLength = estimatedOffset + byteCount;
@@ -1291,7 +1303,9 @@ namespace MessagePack
             }
         }
 
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         private static unsafe void MemoryCopy(void* source, void* destination, long destinationSizeInBytes, long sourceBytesToCopy)
         {
 #if !UNITY_2018_3_OR_NEWER

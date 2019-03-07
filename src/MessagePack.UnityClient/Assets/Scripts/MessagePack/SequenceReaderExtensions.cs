@@ -26,7 +26,9 @@ namespace System.Buffers
         /// <returns>
         /// True if successful. <paramref name="value"/> will be default if failed (due to lack of space).
         /// </returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal static unsafe bool TryRead<T>(ref this SequenceReader<byte> reader, out T value)
             where T : unmanaged
         {

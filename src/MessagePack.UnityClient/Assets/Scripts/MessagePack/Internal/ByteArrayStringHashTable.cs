@@ -82,7 +82,9 @@ namespace MessagePack.Internal
 
         public bool TryGetValue(in ReadOnlySequence<byte> key, out int value) => this.TryGetValue(CodeGenHelpers.GetSpanFromSequence(key), out value);
 
+#if REF_EMIT
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+#endif
         public bool TryGetValue(ReadOnlySpan<byte> key, out int value)
         {
             Entry[][] table = this.buckets;
@@ -123,7 +125,9 @@ namespace MessagePack.Internal
 
         private static readonly bool Is32Bit = IntPtr.Size == 4;
 
+#if REF_EMIT
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+#endif
         private static ulong ByteArrayGetHashCode(ReadOnlySpan<byte> x)
         {
             // FarmHash https://github.com/google/farmhash

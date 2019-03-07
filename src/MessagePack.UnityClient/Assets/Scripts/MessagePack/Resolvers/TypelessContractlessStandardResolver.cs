@@ -34,14 +34,16 @@ namespace MessagePack.Resolvers
             NativeDateTimeResolver.Instance, // Native c# DateTime format, preserving timezone
             BuiltinResolver.Instance, // Try Builtin
             AttributeFormatterResolver.Instance, // Try use [MessagePackFormatter]
-#if !ENABLE_IL2CPP
+#if !ENABLE_IL2CPP && REF_EMIT
             DynamicEnumResolver.Instance, // Try Enum
             DynamicGenericResolver.Instance, // Try Array, Tuple, Collection
             DynamicUnionResolver.Instance, // Try Union(Interface)
             DynamicObjectResolver.Instance, // Try Object
 #endif
+#if REF_EMIT
             DynamicContractlessObjectResolverAllowPrivate.Instance, // Serializes keys as strings
             new TypelessObjectResolver(),
+#endif
         };
 
         static TypelessContractlessStandardResolver()

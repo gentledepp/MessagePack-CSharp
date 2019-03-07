@@ -356,7 +356,7 @@ namespace MessagePack
                         writer.Write(dt.ToString("o", CultureInfo.InvariantCulture));
                         writer.Write("\"");
                     }
-#if !UNITY_2018_3_OR_NEWER
+#if !UNITY_2018_3_OR_NEWER && REF_EMIT
                     else if (extHeader.TypeCode == TypelessFormatter.ExtensionTypeCode)
                     {
                         // prepare type name token

@@ -52,7 +52,9 @@ namespace System.Buffers
         /// Initializes a new instance of the <see cref="SequenceReader{T}"/> struct
         /// over the given <see cref="ReadOnlySequence{T}"/>.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public SequenceReader(in ReadOnlySequence<T> sequence)
         {
             this.usingSequence = true;
@@ -79,7 +81,9 @@ namespace System.Buffers
         /// Initializes a new instance of the <see cref="SequenceReader{T}"/> struct
         /// over the given <see cref="ReadOnlyMemory{T}"/>.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public SequenceReader(ReadOnlyMemory<T> memory)
         {
             this.usingSequence = false;
@@ -141,7 +145,9 @@ namespace System.Buffers
         /// </summary>
         public ReadOnlySpan<T> UnreadSpan
         {
+#if REF_EMIT
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
             get => this.CurrentSpan.Slice(this.CurrentSpanIndex);
         }
 
@@ -160,7 +166,9 @@ namespace System.Buffers
         /// </summary>
         public long Length
         {
+#if REF_EMIT
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
             get
             {
                 if (this.length < 0)
@@ -178,7 +186,9 @@ namespace System.Buffers
         /// </summary>
         /// <param name="value">The next value or default if at the end.</param>
         /// <returns>False if at the end of the reader.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool TryPeek(out T value)
         {
             if (this.moreData)
@@ -198,7 +208,9 @@ namespace System.Buffers
         /// </summary>
         /// <param name="value">The next value or default if at the end.</param>
         /// <returns>False if at the end of the reader.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool TryRead(out T value)
         {
             if (this.End)
@@ -229,7 +241,9 @@ namespace System.Buffers
         /// <summary>
         /// Move the reader back the specified number of items.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Rewind(long count)
         {
             if (count < 0)
@@ -328,7 +342,9 @@ namespace System.Buffers
         /// <summary>
         /// Move the reader ahead the specified number of items.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public void Advance(long count)
         {
             const long TooBigOrNegative = unchecked((long)0xFFFFFFFF80000000);
@@ -357,7 +373,9 @@ namespace System.Buffers
         /// <summary>
         /// Unchecked helper to avoid unnecessary checks where you know count is valid.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal void AdvanceCurrentSpan(long count)
         {
             Debug.Assert(count >= 0, "count >= 0");
@@ -374,7 +392,9 @@ namespace System.Buffers
         /// Only call this helper if you know that you are advancing in the current span
         /// with valid count and there is no need to fetch the next one.
         /// </summary>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal void AdvanceWithinSpan(long count)
         {
             Debug.Assert(count >= 0, "count >= 0");
@@ -432,7 +452,9 @@ namespace System.Buffers
         /// </summary>
         /// <param name="destination">Destination to copy to.</param>
         /// <returns>True if there is enough data to copy to the <paramref name="destination"/>.</returns>
+#if REF_EMIT
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public bool TryCopyTo(Span<T> destination)
         {
             ReadOnlySpan<T> firstSpan = this.UnreadSpan;

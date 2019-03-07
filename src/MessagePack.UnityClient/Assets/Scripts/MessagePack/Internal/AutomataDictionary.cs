@@ -1,6 +1,8 @@
 ﻿// Copyright (c) All contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#if REF_EMIT
+
 using System;
 using System.Buffers;
 using System.Collections;
@@ -131,7 +133,7 @@ namespace MessagePack.Internal
 
         /* IL Emit */
 
-#if !NET_STANDARD_2_0
+#if !NET_STANDARD_2_0 && REF_EMIT
 
         public void EmitMatch(ILGenerator il, LocalBuilder bytesSpan, LocalBuilder key, Action<KeyValuePair<string, int>> onFound, Action onNotFound)
         {
@@ -285,7 +287,7 @@ namespace MessagePack.Internal
                 }
             }
 
-#if !NET_STANDARD_2_0
+#if !NET_STANDARD_2_0 && REF_EMIT
 
             // SearchNext(ref ReadOnlySpan<byte> bytes)
             public void EmitSearchNext(ILGenerator il, LocalBuilder bytesSpan, LocalBuilder key, Action<KeyValuePair<string, int>> onFound, Action onNotFound)
@@ -502,3 +504,5 @@ namespace MessagePack.Internal
         }
     }
 }
+
+#endif
