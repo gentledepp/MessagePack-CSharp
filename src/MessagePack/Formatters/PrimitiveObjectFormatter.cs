@@ -24,7 +24,9 @@ namespace MessagePack.Formatters
             { typeof(Double), 11 },
             { typeof(DateTime), 12 },
             { typeof(string), 13 },
-            { typeof(byte[]), 14 }
+            { typeof(byte[]), 14 },
+            { typeof(Guid), 15 },
+            { typeof(TimeSpan), 16 }
         };
 
         PrimitiveObjectFormatter()
@@ -92,6 +94,10 @@ namespace MessagePack.Formatters
                         return MessagePackBinary.WriteString(ref bytes, offset, (string)value);
                     case 14:
                         return MessagePackBinary.WriteBytes(ref bytes, offset, (byte[])value);
+                    case 15:
+                        return MessagePackBinary.WriteString(ref bytes, offset, ((Guid)value).ToString());
+                    case 16:
+                        return MessagePackBinary.WriteInt64(ref bytes, offset, ((TimeSpan)value).Ticks);
                     default:
                         throw new InvalidOperationException("Not supported primitive object resolver. type:" + t.Name);
                 }
